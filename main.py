@@ -13,7 +13,8 @@ from flask import Flask, request, jsonify
 from openpyxl import Workbook
 
 # === Config ===
-CHROME_DRIVER_PATH = '/usr/bin/chromium-browser'  # Updated for Ubuntu
+# Update the path to the Chrome and Chromedriver for Windows
+CHROME_DRIVER_PATH = 'C:/path/to/chromedriver.exe'  # Replace with actual path to chromedriver.exe
 TARGET_URL = "https://upi9.pro/merchant/withdrawls/"
 REFRESH_INTERVAL = 15
 LOG_FILE = "withdrawal_logs.txt"
@@ -27,10 +28,10 @@ ADMIN_ID = 8468186217
 # === Setup ===
 options = webdriver.ChromeOptions()
 options.add_argument("--start-maximized")
-options.add_argument('--no-sandbox')  # Required for root users
+options.add_argument('--no-sandbox')  # Required for some configurations
 options.add_argument('--disable-dev-shm-usage')  # Avoid memory issues
-options.add_argument('--headless')  # Ensuring headless mode for VPS
-options.add_argument('--disable-gpu')  # Added to avoid issues with headless mode
+options.add_argument('--headless')  # Headless mode for Windows
+options.add_argument('--disable-gpu')  # Ensure it works in headless mode
 
 # Logging for debug purposes
 print("Starting browser with options:", options.arguments)
@@ -288,5 +289,4 @@ while True:
     except Exception as e:
         print(f"❌ Main loop error: {e}")
     time.sleep(REFRESH_INTERVAL)
-
 

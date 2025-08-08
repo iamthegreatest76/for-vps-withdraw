@@ -27,12 +27,23 @@ ADMIN_ID = 8468186217
 # === Setup ===
 options = webdriver.ChromeOptions()
 options.add_argument("--start-maximized")
-options.add_argument('--headless')  # Optional: Run without GUI
 options.add_argument('--no-sandbox')  # Required for root users
 options.add_argument('--disable-dev-shm-usage')  # Avoid memory issues
+options.add_argument('--headless')  # Ensuring headless mode for VPS
+options.add_argument('--disable-gpu')  # Added to avoid issues with headless mode
 
-driver = webdriver.Chrome(service=Service(CHROME_DRIVER_PATH), options=options)
-driver.get(TARGET_URL)
+# Logging for debug purposes
+print("Starting browser with options:", options.arguments)
+
+# Attempt to initialize the WebDriver
+try:
+    driver = webdriver.Chrome(service=Service(CHROME_DRIVER_PATH), options=options)
+    driver.get(TARGET_URL)
+    print("Browser started successfully, waiting for login...")
+except Exception as e:
+    print(f"❌ Error initializing the browser: {e}")
+    exit(1)
+
 input("🔐 Login manually and press ENTER to continue...")
 
 app = Flask(__name__)
@@ -277,4 +288,5 @@ while True:
     except Exception as e:
         print(f"❌ Main loop error: {e}")
     time.sleep(REFRESH_INTERVAL)
+
 

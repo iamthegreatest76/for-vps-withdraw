@@ -1,4 +1,3 @@
-# === main.py ===
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
@@ -14,7 +13,7 @@ from flask import Flask, request, jsonify
 from openpyxl import Workbook
 
 # === Config ===
-CHROME_DRIVER_PATH = 'C:/Users/GAME/chromedriver-win64/chromedriver.exe'
+CHROME_DRIVER_PATH = '/usr/lib/chromium-browser/chromedriver'  # Updated for Ubuntu
 TARGET_URL = "https://upi9.pro/merchant/withdrawls/"
 REFRESH_INTERVAL = 15
 LOG_FILE = "withdrawal_logs.txt"
@@ -28,6 +27,10 @@ ADMIN_ID = 8468186217
 # === Setup ===
 options = webdriver.ChromeOptions()
 options.add_argument("--start-maximized")
+options.add_argument('--headless')  # Optional: Run without GUI
+options.add_argument('--no-sandbox')  # Required for root users
+options.add_argument('--disable-dev-shm-usage')  # Avoid memory issues
+
 driver = webdriver.Chrome(service=Service(CHROME_DRIVER_PATH), options=options)
 driver.get(TARGET_URL)
 input("🔐 Login manually and press ENTER to continue...")
@@ -274,3 +277,4 @@ while True:
     except Exception as e:
         print(f"❌ Main loop error: {e}")
     time.sleep(REFRESH_INTERVAL)
+

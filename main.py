@@ -13,7 +13,7 @@ from flask import Flask, request, jsonify
 from openpyxl import Workbook
 
 # === Config ===
-CHROME_DRIVER_PATH = '/usr/lib/chromium-browser/chromedriver'  # Updated for Ubuntu
+CHROME_DRIVER_PATH = '/usr/bin/chromium-browser'  # Updated for Ubuntu
 TARGET_URL = "https://upi9.pro/merchant/withdrawls/"
 REFRESH_INTERVAL = 15
 LOG_FILE = "withdrawal_logs.txt"

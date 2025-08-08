@@ -1,8 +1,7 @@
 from selenium import webdriver
-from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
 import time
 from datetime import datetime, timedelta
 import requests
@@ -13,8 +12,7 @@ from flask import Flask, request, jsonify
 from openpyxl import Workbook
 
 # === Config ===
-# Update the path to the Chrome and Chromedriver for Windows
-CHROME_DRIVER_PATH = 'C:/path/to/chromedriver.exe'  # Replace with actual path to chromedriver.exe
+CHROME_DRIVER_PATH = '/usr/bin/chromedriver'  # Set path for chromedriver
 TARGET_URL = "https://upi9.pro/merchant/withdrawls/"
 REFRESH_INTERVAL = 15
 LOG_FILE = "withdrawal_logs.txt"
@@ -26,11 +24,11 @@ CHAT_ID = -1002559335031
 ADMIN_ID = 8468186217
 
 # === Setup ===
-options = webdriver.ChromeOptions()
+options = Options()
 options.add_argument("--start-maximized")
-options.add_argument('--no-sandbox')  # Required for some configurations
+options.add_argument('--no-sandbox')  # Required for root users
 options.add_argument('--disable-dev-shm-usage')  # Avoid memory issues
-options.add_argument('--headless')  # Headless mode for Windows
+options.add_argument('--headless')  # Headless mode for VPS
 options.add_argument('--disable-gpu')  # Ensure it works in headless mode
 
 # Logging for debug purposes
@@ -289,4 +287,3 @@ while True:
     except Exception as e:
         print(f"❌ Main loop error: {e}")
     time.sleep(REFRESH_INTERVAL)
-
